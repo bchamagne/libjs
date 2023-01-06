@@ -107,6 +107,7 @@ console.log(keychain)
 {
   version: 1,
   seed: "masterKeychainSeed",
+  authorizedPublicKeys: [ Uint8Array(34) ],
   services: {
     uco: {
       derivationPath: "m/650'/0/0"
@@ -220,6 +221,7 @@ console.log(keychain)
 {
   version: 1,
   seed: "mymasterseed",
+  authorizedPublicKeys: [ Uint8Array(34) ],
   services: {
     uco: {
       derivationPath: "m/650'/0/0",
@@ -233,6 +235,58 @@ console.log(keychain)
     }
   }
 }
+```
+
+#### removeService(name)
+
+Remove a service from the keychain
+
+- `name`: Name of the service to add
+
+```js
+import Archethic from "archethic";
+
+const archethic = new Archethic("https://testnet.archethic.net");
+await archethic.connect();
+
+const keychain = await archethic.account.getKeychain(accessKeychainSeed);
+keychain.removeService("nft1");
+```
+
+#### addAuthorizedPublicKey(publicKey)
+
+Authorize a key to access the keychain
+
+- `publicKey`: The public key (type: Uint8Array)
+
+```js
+import Archethic from "archethic";
+
+const archethic = new Archethic("https://testnet.archethic.net");
+await archethic.connect();
+
+const accessSeed = "myseed";
+const { publicKey } = Crypto.deriveKeyPair(accessSeed, 0);
+const keychain = await archethic.account.getKeychain(accessKeychainSeed);
+keychain.addAuthorizedPublicKey(publicKey);
+```
+
+#### removeAuthorizedPublicKey(publicKey)
+
+Unauthorized a key to access the keychain
+
+- `publicKey`: The public key (type: Uint8aArray)
+
+```js
+import Archethic from "archethic";
+
+const archethic = new Archethic("https://testnet.archethic.net");
+await archethic.connect();
+
+const accessSeed = "myseed";
+const { publicKey } = Crypto.deriveKeyPair(accessSeed, 0);
+const keychain = await archethic.account.getKeychain(accessKeychainSeed);
+keychain.removeAuthorizedPublicKey(publicKey);
 ```
 
   </details>

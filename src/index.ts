@@ -48,6 +48,10 @@ export default class Archethic {
   }
 
   async requestNode(call: (endpoint: string) => Promise<any>): Promise<any> {
+    if (this.nearestEndpoints.size == 0) {
+      throw "Empty nearestEndpoints, did you forget to connect() ?";
+    }
+
     const node = this.nearestEndpoints.values().next().value;
 
     try {
